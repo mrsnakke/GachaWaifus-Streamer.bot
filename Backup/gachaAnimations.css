@@ -1,0 +1,497 @@
+/* Estilos y Animaciones del Gachapon */
+
+/* Estilos para la previsualización del gacha */
+#gacha-preview {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    background: transparent;
+    z-index: 100;
+}
+
+#preview-image {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    animation: fadeInScale 1s ease-out forwards;
+}
+
+/* Estilos para la animación de la máquina de gashapon */
+#gashapon-animation {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    background: transparent;
+    z-index: 100;
+}
+
+#gashapon-machine-img {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+}
+
+/* Estilos para la tirada múltiple (5 personajes) */
+#multi-pull-display {
+    width: 100%;
+    height: 100%;
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+    position: absolute;
+    background: rgba(0,0,0,0); 
+    z-index: 90;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+#multi-pull-grid {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+}
+
+.redeemer-name {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0 0 15px rgba(0,255,255,0.8), 0 0 25px rgba(0,255,255,0.5);
+    z-index: 10;
+    animation: textReveal 1.5s ease-out forwards;
+}
+
+/* Ajuste específico para la tirada múltiple */
+#multi-pull-display .redeemer-name {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+/* Ajuste para la tirada única (mantiene el estilo anterior) */
+#single-pull-display .redeemer-name {
+    position: absolute;
+    top: 20px;
+}
+
+.character-card {
+    width: 200px;
+    height: 300px;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    text-align: center;
+    padding: 0;
+    box-sizing: border-box;
+    position: relative;
+    overflow: visible;
+    animation: cardAppear 0.8s ease-out forwards;
+    opacity: 0;
+    transform: translateY(50px) scale(0.8);
+    transform-style: preserve-3d;
+}
+
+/* Animación de volteo de tarjeta */
+.character-card.is-flipped .card-face-front {
+    transform: rotateY(180deg);
+}
+
+.character-card.is-flipped .card-face-back {
+    transform: rotateY(0deg);
+}
+
+.card-face {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    backface-visibility: hidden;
+    transition: transform 0.6s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    box-sizing: border-box;
+    padding: 10px;
+    border: 2px solid;
+    border-image-slice: 1;
+    box-shadow: 0 0 20px rgba(0,255,255,0.5), inset 0 0 10px rgba(0,255,255,0.3);
+}
+
+.card-face-front {
+    background: rgba(20, 20, 40, 0.9);
+    transform: rotateY(0deg);
+}
+
+.card-face-back {
+    background: rgba(10, 10, 20, 0.7);
+    transform: rotateY(-180deg);
+}
+
+/* Estilos para la tirada única */
+#single-pull-display {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 95;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+#single-character-image {
+    max-width: 60%;
+    max-height: 70%;
+    object-fit: contain;
+    border: 4px solid;
+    border-image-source: linear-gradient(45deg, #ffd700, #ff00ff, #00ffff);
+    border-image-slice: 1;
+    box-shadow: 0 0 40px rgba(255,215,0,0.9), inset 0 0 20px rgba(255,0,255,0.7);
+    background: rgba(0, 0, 0, 0);
+    padding: 20px;
+    box-sizing: border-box;
+    animation: futuristicAppear 1.5s ease-out forwards;
+}
+
+#single-pull-redeemer {
+    margin-top: 20px;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0 0 20px rgba(0,255,255,0.8), 0 0 30px rgba(0,255,255,0.5);
+    animation: textReveal 1.5s ease-out forwards;
+}
+
+#single-pull-display .star-container {
+    margin-top: 10px;
+    display: flex;
+    gap: 5px;
+}
+
+#single-character-name {
+    margin-top: 15px;
+    font-size: 2.2rem;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0 0 15px rgba(0,255,255,0.8), 0 0 25px rgba(0,255,255,0.5);
+    animation: textReveal 1.5s ease-out forwards;
+    animation-delay: 0.5s;
+    opacity: 0;
+    position: relative;
+    z-index: 10;
+}
+
+/* Animaciones de pulso de rareza */
+@keyframes pulse-neon-blue {
+    0% { box-shadow: 0 0 10px rgba(0,123,255,0.5), inset 0 0 5px rgba(0,192,255,0.3); }
+    50% { box-shadow: 0 0 30px rgba(0,123,255,0.8), inset 0 0 15px rgba(0,192,255,0.5); }
+    100% { box-shadow: 0 0 10px rgba(0,123,255,0.5), inset 0 0 5px rgba(0,192,255,0.3); }
+}
+
+@keyframes pulse-neon-purple {
+    0% { box-shadow: 0 0 10px rgba(138,43,226,0.5), inset 0 0 5px rgba(218,112,214,0.3); }
+    50% { box-shadow: 0 0 30px rgba(138,43,226,0.8), inset 0 0 15px rgba(218,112,214,0.5); }
+    100% { box-shadow: 0 0 10px rgba(138,43,226,0.5), inset 0 0 5px rgba(218,112,214,0.3); }
+}
+
+@keyframes pulse-neon-gold {
+    0% { box-shadow: 0 0 10px rgba(255,215,0,0.7), inset 0 0 5px rgba(255,165,0,0.5); }
+    50% { box-shadow: 0 0 30px rgba(255,215,0,0.9), inset 0 0 15px rgba(255,165,0,0.7); }
+    100% { box-shadow: 0 0 10px rgba(255,215,0,0.7), inset 0 0 5px rgba(255,165,0,0.5); }
+}
+
+@keyframes pulse-neon-rainbow {
+    0% { box-shadow: 0 0 10px rgba(255,0,255,0.8), inset 0 0 5px rgba(0,255,255,0.6); }
+    50% { box-shadow: 0 0 40px rgba(255,0,255,1), inset 0 0 20px rgba(0,255,255,0.8); }
+    100% { box-shadow: 0 0 10px rgba(255,0,255,0.8), inset 0 0 5px rgba(0,255,255,0.6); }
+}
+
+.rarity-pulse-3_star .card-face-front { animation: pulse-neon-blue 1.5s infinite alternate; }
+.rarity-pulse-4_star .card-face-front { animation: pulse-neon-purple 1.5s infinite alternate; }
+.rarity-pulse-5_star .card-face-front { animation: pulse-neon-gold 1.5s infinite alternate; }
+.rarity-pulse-6_star .card-face-front { animation: pulse-neon-rainbow 1.5s infinite alternate; }
+
+/* Colores de borde y sombra por rareza EN LA CARA TRASERA */
+.card-face-back.rarity-3_star {
+    border-image-source: linear-gradient(45deg, #007bff, #00c0ff);
+    box-shadow: 0 0 25px rgba(0,123,255,0.7), inset 0 0 15px rgba(0,192,255,0.4);
+}
+.card-face-back.rarity-4_star {
+    border-image-source: linear-gradient(45deg, #8a2be2, #da70d6);
+    box-shadow: 0 0 25px rgba(138,43,226,0.7), inset 0 0 15px rgba(218,112,214,0.4);
+}
+.card-face-back.rarity-5_star {
+    border-image-source: linear-gradient(45deg, #ffd700, #ffa500);
+    box-shadow: 0 0 30px rgba(255,215,0,0.8), inset 0 0 20px rgba(255,165,0,0.6);
+}
+.card-face-back.rarity-6_star {
+    border-image-source: linear-gradient(45deg, #ff00ff, #00ffff, #ffdd00, #ff00ff);
+    background-size: 200% 200%;
+    animation: rainbow-border-flow 4s linear infinite;
+    box-shadow: 0 0 40px rgba(255,0,255,0.9), inset 0 0 25px rgba(0,255,255,0.7);
+}
+
+.rarity-label {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(0,0,0,0.7);
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    z-index: 2;
+    color: #fff;
+    text-shadow: 0 0 5px rgba(255,255,255,0.7);
+}
+.rarity-3_star .rarity-label { color: #00c0ff; text-shadow: 0 0 8px #00c0ff; }
+.rarity-4_star .rarity-label { color: #da70d6; text-shadow: 0 0 8px #da70d6; }
+.rarity-5_star .rarity-label { color: #ffa500; text-shadow: 0 0 8px #ffa500; }
+.rarity-6_star .rarity-label { color: #00ffff; text-shadow: 0 0 8px #00ffff; }
+
+.character-image {
+    max-width: 90%;
+    max-height: 70%;
+    object-fit: contain;
+    margin-top: 20px;
+    z-index: 1;
+}
+
+.character-name {
+    margin-top: 10px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(0,255,255,0.8);
+}
+
+/* Animación de aparición de tarjeta */
+@keyframes cardAppear {
+    0% { opacity: 0; transform: translateY(50px) scale(0.8); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Keyframe para la animación del borde de 6 estrellas */
+@keyframes rainbow-border-flow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Animación de volteo especial para 5 y 6 estrellas */
+.character-card.five-star-flip {
+    animation: five-star-effect 0.8s ease-in-out;
+}
+
+.character-card.six-star-flip {
+    animation: six-star-effect 0.9s ease-in-out;
+}
+
+@keyframes five-star-effect {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.15);
+        box-shadow: 0 0 40px #ffd700, 0 0 60px #ffa500;
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: none;
+    }
+}
+
+@keyframes six-star-effect {
+    0% {
+        transform: scale(1);
+    }
+    40% {
+        transform: scale(1.2);
+    }
+    50% {
+        transform: scale(1.25);
+        box-shadow: 0 0 50px #fff, 0 0 80px #ff00ff, 0 0 120px #00ffff;
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: none;
+    }
+}
+
+/* Estilos para la revelación del personaje de 5 estrellas */
+#five-star-reveal {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    background: transparent;
+    background: transparent;
+    z-index: 110;
+}
+
+#five-star-image {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    animation: futuristicAppear 3s ease-out forwards;
+    border: 4px solid;
+    border-image-source: linear-gradient(45deg, #ffd700, #ff00ff, #00ffff);
+    border-image-slice: 1;
+    box-shadow: 0 0 40px rgba(255,215,0,0.9), inset 0 0 20px rgba(255,0,255,0.7);
+    background: rgba(0, 0, 0, 0);
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Animaciones existentes, adaptadas o nuevas */
+@keyframes fadeInScale {
+    0% { opacity: 0; transform: scale(0.8); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes fadeInPop {
+    0% { opacity: 0; transform: scale(0.5); }
+    70% { opacity: 1; transform: scale(1.1); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes futuristicAppear {
+	0% {
+		opacity: 0;
+		transform: scale(0.5) translateY(100px) rotateY(90deg);
+		filter: blur(20px) brightness(0);
+	}
+	50% {
+		opacity: 1;
+		transform: scale(1.1) translateY(-20px) rotateY(0deg);
+		filter: blur(0) brightness(1);
+	}
+	100% {
+		opacity: 1;
+		transform: scale(1) translateY(0) rotateY(0deg);
+		filter: blur(0) brightness(1);
+	}
+}
+
+@keyframes textReveal {
+	0% {
+		opacity: 0;
+		transform: translateY(20px);
+		filter: blur(5px);
+	}
+	100% {
+		opacity: 1;
+		transform: translateY(0);
+		filter: blur(0);
+	}
+}
+
+@keyframes elementAppear {
+	0% {
+		opacity: 0;
+		transform: translate(-50%, -50%) scale(0) rotate(0deg);
+	}
+	50% {
+		opacity: 1;
+		transform: translate(-50%, -50%) scale(1.2) rotate(180deg);
+	}
+	100% {
+		opacity: 1;
+		transform: translate(-50%, -50%) scale(1) rotate(360deg);
+	}
+}
+
+@keyframes starPop {
+	0% {
+		opacity: 0;
+		transform: scale(0);
+	}
+	70% {
+		opacity: 1;
+		transform: scale(1.2);
+	}
+	100% {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+@keyframes futuristicExit {
+	0% {
+		transform: scale(1);
+		opacity: 1;
+	}
+	100% {
+		transform: scale(0.5) translateY(-100px);
+		opacity: 0;
+		filter: blur(10px);
+	}
+}
+
+/* Estilos para las estrellas por rareza */
+.star-icon.rarity-3 {
+    filter: drop-shadow(0 0 8px rgba(0, 123, 255, 0.8));
+}
+.star-icon.rarity-4 {
+    filter: drop-shadow(0 0 8px rgba(138, 43, 226, 0.8));
+}
+.star-icon.rarity-5 {
+    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.9));
+}
+.star-icon.rarity-6 {
+    filter: drop-shadow(0 0 12px rgba(255, 0, 255, 0.9)) drop-shadow(0 0 12px rgba(0, 255, 255, 0.9));
+}
+
+/* Asegurarse de que las estrellas tengan un tamaño adecuado y se animen */
+.star-icon {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+    opacity: 0;
+    transform: scale(0);
+    animation: starPop 1s ease-out forwards;
+}
+
+/* Definir el keyframe para la animación de aparición de estrellas */
+@keyframes starPop {
+    0% {
+        opacity: 0;
+        transform: scale(0);
+        filter: drop-shadow(0 0 0px rgba(255,255,255,0));
+    }
+    70% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Re-aplicar los filtros directamente en las clases para que funcionen sin variables */
+.star-icon.rarity-3,
+.star-icon.rarity-4,
+.star-icon.rarity-5,
+.star-icon.rarity-6 {
+    animation-name: starPop;
+    animation-fill-mode: forwards;
+}

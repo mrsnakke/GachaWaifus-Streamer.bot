@@ -1,0 +1,4 @@
+Para editar las animaciones del gachapon, ahora debes enfocarte principalmente en dos archivos:
+
+1. __`web/js/gachaAnimations.js`__: Este archivo maneja la __lógica y la orquestación__ de todas las animaciones. Aquí modificarías la secuencia, duración, orden de aparición de elementos y la reproducción de sonidos.
+2. __`web/css/gachaAnimations.css`__: Este archivo contiene todos los __estilos visuales y las definiciones de las animaciones CSS__ (`@keyframes`). Aquí ajustarías la apariencia, los efectos de brillo, las transiciones y los colores de las animaciones.

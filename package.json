@@ -1,0 +1,23 @@
+{
+  "name": "gacha-waifus-overlay",
+  "version": "1.0.0",
+  "description": "Un overlay de Gacha de waifus para Streamer.bot usando websockets.",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "mrsnakevt",
+  "license": "AGPL-3.0",
+  "dependencies": {
+    "@notionhq/client": "^4.0.2",
+    "@octokit/rest": "^22.0.0",
+    "dotenv": "^17.2.2",
+    "express": "^4.19.2",
+    "kill-port": "^2.0.1",
+    "multer": "^2.0.2",
+    "open": "^10.2.0",
+    "sharp": "^0.34.4",
+    "uuid": "^11.1.0",
+    "ws": "^8.17.0"
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "gacha_rules": {
+    "rarity_probabilities": {
+      "3_star": 0.943,
+      "4_star": 0.051,
+      "5_star": 0.006,
+      "6_star": 0.000001
+    },
+    "banner_selection_probabilities": {
+      "4_star_and_above": {
+        "standard_banner": 0.7,
+        "seasonal_banner": 0.3
+      }
+    },
+    "six_star_character_stock": 1,
+    "six_star_character_name": "SuperRareChar",
+    "six_star_character_image_filename": "https://raw.githubusercontent.com/mrsnakke/gachaIMG/main/img/characters/6-star/SuperRareChar.webp",
+    "six_star_character_element": "Cosmic"
+  },
+  "animation_durations": {
+    "preview_display": 3000,
+    "gashapon_animation": 4000,
+    "multi_pull_display": 5000,
+    "five_star_reveal": 6000,
+    "single_pull_display": 3000
+  },
+  "character_stocks": {
+    "Zero Two": 0,
+    "Hatsune Miku": 0,
+    "Yuna (IA)": 0,
+    "SuperRareChar": 0,
+    "Marin Kitagawa": 0,
+    "Meredith": 0,
+    "Frieren": 0,
+    "Phoebe": 0,
+    "Chisa": 0,
+    "Astolfo": 0,
+    "Dorothy": 0,
+    "Musashi": 0,
+    "kanami": 0,
+    "Fern": 0,
+    "Megumin": 0,
+    "Hitori Gotoh": 0,
+    "Elegg": 0,
+    "Saber": 0,
+    "Mai Sakurajima": 0,
+    "Nami": 0,
+    "Power": 0,
+    "Albedo  O": 0,
+    "2B": 0,
+    "Nezuko": 0,
+    "Emilia": 0,
+    "Mika Misono": 0,
+    "camellia": 3,
+    "Camellya": 0,
+    "Ishtar": 0
+  }
+}
