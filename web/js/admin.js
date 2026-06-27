@@ -33,9 +33,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let editingCharacter = null; // Para saber si estamos editando o añadiendo
 
-    // --- Funciones de Utilidad ---
     function showNotification(message, isError = false) {
-        alert(message); // Por ahora, un simple alert. Podríamos mejorarlo con un div.
+        alert(message);
     }
 
     // --- Lógica de Pestañas ---
@@ -58,6 +57,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 loadSeasonalCharactersConfig();
             } else if (tabId === 'keys') {
                 loadUserKeys();
+            } else if (tabId === 'trades') {
+                loadTrades();
             } else if (tabId === 'info') {
                 loadEndpointInfo();
             }
@@ -69,6 +70,8 @@ document.addEventListener('DOMContentLoaded', () => {
         loadEndpointInfo();
     } else if (document.querySelector('.tab-button.active').dataset.tab === 'keys') {
         loadUserKeys();
+    } else if (document.querySelector('.tab-button.active').dataset.tab === 'trades') {
+        loadTrades();
     }
     else {
         loadCharacters(); // Cargar personajes por defecto
@@ -83,25 +86,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             const endpoints = await response.json();
 
-            const streamerbotEndpointsDiv = document.getElementById('streamerbot-endpoints');
             const adminEndpointsDiv = document.getElementById('admin-endpoints');
             const tradeEndpointDiv = document.getElementById('trade-endpoint');
-            
-            // Crear y añadir la sección de Keys si no existe
-            let keysEndpointSection = document.getElementById('keys-endpoint-section');
-            if (!keysEndpointSection) {
-                keysEndpointSection = document.createElement('section');
-                keysEndpointSection.id = 'keys-endpoint-section';
-                keysEndpointSection.innerHTML = '<h3>Gestión de Keys (Admin)</h3><pre><code id="keys-endpoint"></code></pre>';
-                document.getElementById('endpoints-info').appendChild(keysEndpointSection);
-            }
-            const keysEndpointCode = document.getElementById('keys-endpoint');
 
-
-            streamerbotEndpointsDiv.textContent = endpoints.streamerbot.join('\n');
             adminEndpointsDiv.textContent = endpoints.admin.join('\n');
             tradeEndpointDiv.textContent = endpoints.trade;
-            keysEndpointCode.textContent = endpoints.keys.join('\n');
 
         } catch (error) {
             console.error('Error al cargar la información de endpoints:', error);
@@ -403,9 +392,12 @@ document.addEventListener('DOMContentLoaded', () => {
             prob5StarInput.value = config.gacha_rules.rarity_probabilities['5_star'];
             prob6StarInput.value = config.gacha_rules.rarity_probabilities['6_star'];
 
-            // Rellenar probabilidades de banner
-            probStandardBannerInput.value = config.gacha_rules.banner_selection_probabilities['4_star_and_above']['standard_banner'];
-            probSeasonalBannerInput.value = config.gacha_rules.banner_selection_probabilities['4_star_and_above']['seasonal_banner'];
+            // Rellenar probabilidades de banner (si existen en config)
+            const bannerProbs = config.gacha_rules?.banner_selection_probabilities?.['4_star_and_above'];
+            if (bannerProbs) {
+                probStandardBannerInput.value = bannerProbs.standard_banner ?? 0.6;
+                probSeasonalBannerInput.value = bannerProbs.seasonal_banner ?? 0.4;
+            }
 
             // Renderizar stocks de personajes
             renderCharacterStocks(config.character_stocks);
@@ -790,4 +782,89 @@ document.addEventListener('DOMContentLoaded', () => {
             accordionContent.style.display = 'none';
         }
     });
+
+    // --- Lógica para la pestaña de Trades ---
+    const tradeStatusFilter = document.getElementById('trade-status-filter');
+    const tradesList = document.getElementById('trades-list');
+
+    async function loadTrades() {
+        tradesList.innerHTML = '<p>Cargando trades...</p>';
+        try {
+            const response = await fetch('/admin/trades');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const trades = await response.json();
+            renderTrades(trades);
+        } catch (error) {
+            console.error('Error al cargar trades:', error);
+            showNotification('Error al cargar trades.', true);
+            tradesList.innerHTML = '<p>Error al cargar trades.</p>';
+        }
+    }
+
+    function renderTrades(trades) {
+        tradesList.innerHTML = '';
+        if (!trades || trades.length === 0) {
+            tradesList.innerHTML = '<p>No hay trades.</p>';
+            return;
+        }
+
+        const filter = tradeStatusFilter.value;
+        const filtered = filter === 'all' ? trades : trades.filter(t => t.status === filter);
+
+        if (filtered.length === 0) {
+            tradesList.innerHTML = `<p>No hay trades con estado: ${filter}</p>`;
+            return;
+        }
+
+        const fragment = document.createDocumentFragment();
+        filtered.forEach(trade => {
+            const tradeCard = document.createElement('div');
+            tradeCard.className = 'trade-card';
+            tradeCard.dataset.id = trade.id;
+            const statusClass = `status-${trade.status}`;
+            tradeCard.innerHTML = `
+                <div class="trade-info">
+                    <h4>Trade ${trade.id.slice(0, 8)}</h4>
+                    <p><strong>De:</strong> ${trade.offeringName} (${trade.offeringId})</p>
+                    <p><strong>Ofrece:</strong> ${trade.characterName}</p>
+                    <p><strong>Para:</strong> ${trade.receivingName} (${trade.receivingId})</p>
+                    <p><strong>Estado:</strong> <span class="${statusClass}">${trade.status}</span></p>
+                    <p><strong>Creado:</strong> ${new Date(trade.createdAt).toLocaleString()}</p>
+                    ${trade.completedAt ? `<p><strong>Completado:</strong> ${new Date(trade.completedAt).toLocaleString()}</p>` : ''}
+                </div>
+                <div class="trade-actions">
+                    ${trade.status === 'pending' ? `<button class="cancel-trade" data-id="${trade.id}">Cancelar (Admin)</button>` : ''}
+                </div>
+            `;
+            fragment.appendChild(tradeCard);
+        });
+        tradesList.appendChild(fragment);
+
+        document.querySelectorAll('.cancel-trade').forEach(button => {
+            button.addEventListener('click', (event) => cancelTradeAdmin(event.target.dataset.id));
+        });
+    }
+
+    tradeStatusFilter.addEventListener('change', () => {
+        loadTrades();
+    });
+
+    async function cancelTradeAdmin(tradeId) {
+        if (!confirm(`¿Cancelar trade ${tradeId.slice(0, 8)}?`)) return;
+        try {
+            const response = await fetch(`/admin/trades/${tradeId}`, { method: 'DELETE' });
+            const result = await response.json();
+            if (response.ok) {
+                showNotification(result.message);
+                loadTrades();
+            } else {
+                showNotification(result.error || 'Error al cancelar trade.', true);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            showNotification('Error de conexión.', true);
+        }
+    }
 });

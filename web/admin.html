@@ -15,6 +15,7 @@
             <button class="tab-button" data-tab="gacha-config">Configuración de Gacha</button>
             <button class="tab-button" data-tab="seasonal-characters">Personajes de Temporada</button>
             <button class="tab-button" data-tab="keys">Keys</button>
+            <button class="tab-button" data-tab="trades">Trades</button>
             <button class="tab-button" data-tab="info">Información y Endpoints</button>
         </nav>
 
@@ -154,13 +155,27 @@
             </section>
         </div>
 
+        <div id="trades" class="tab-content">
+            <h2>Trades Activos</h2>
+            <div class="trades-filters">
+                <select id="trade-status-filter">
+                    <option value="all">Todos</option>
+                    <option value="pending">Pendientes</option>
+                    <option value="accepted">Aceptados</option>
+                    <option value="cancelled">Cancelados</option>
+                </select>
+            </div>
+            <div id="trades-list">
+                <!-- Los trades se cargarán aquí -->
+                <p>Cargando trades...</p>
+            </div>
+        </div>
+
         <div id="info" class="tab-content">
-            <h2>Información y Endpoints</h2>
+            <h2>Información de la API</h2>
             <section id="endpoints-info">
-                <h3>Endpoints para Streamer.bot</h3>
-                <p>Usa estos enlaces en tus acciones de Streamer.bot. Reemplaza `YOUR_IP_ADDRESS` con la IP de este PC si lo usas desde otra máquina.</p>
-                <pre><code id="streamerbot-endpoints"></code></pre>
-                
+                <p>Este servidor recibe eventos del Kick Backend vía <code>POST /kick-events</code>.</p>
+                <p>El overlay se conecta automáticamente vía WebSocket en el mismo host.</p>
                 <h3>Comandos de Administración</h3>
                 <pre><code id="admin-endpoints"></code></pre>
 

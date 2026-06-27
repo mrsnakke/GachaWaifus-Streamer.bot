@@ -2,8 +2,7 @@
 
 /* ================== CAPA DE PREVIEW Y GASHAPON ================== */
 #gacha-preview,
-#gashapon-animation,
-#five-star-reveal {
+#gashapon-animation {
     width: 100%;
     height: 100%;
     display: flex;
@@ -22,7 +21,7 @@
     object-fit: contain;
 }
 
-#five-star-reveal { z-index: 110; }
+
 
 /* ================== SINGLE PULL - BURBUJA GRANDE ================== */
 #single-pull-display {
